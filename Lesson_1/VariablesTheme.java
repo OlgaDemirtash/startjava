@@ -139,7 +139,7 @@ public class VariablesTheme {
         int hours = inpSeconds / 3600;
         int minutes = inpSeconds / 60 % 60;
         int seconds = inpSeconds % 60;
-
-        System.out.println("    " + inpSeconds + " секунд это: " + hours + ":" + minutes + ":" + seconds);
+        System.out.println("    " + inpSeconds + " секунд это: " + 
+                hours + ":" + minutes + ":" + seconds);
     }
 }
