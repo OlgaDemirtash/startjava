@@ -6,23 +6,23 @@ public class IfElseStatementTheme {
         boolean isMaleSex = true;
         float height = 1.7f;
 
-        if(age > 20) {
+        if (age > 20) {
             System.out.println("    Возраст: > 20");
         } else {
             System.out.println("    Возраст: < 20");
         }
-        if(!isMaleSex) {
+        if (!isMaleSex) {
             System.out.println("    Пол: женский");
         } else {
             System.out.println("    Пол: мужской");
         }
-        if(height < 1.80) {
+        if (height < 1.80) {
             System.out.println("    Рост: < 1.8 м");
         } else {
             System.out.println("    Рост: > 1.8 м");
         }
         char capitalLetter = "Bob".charAt(0);
-        if(capitalLetter == 'M') {
+        if (capitalLetter == 'M') {
             System.out.println("    Первая буква имени: M");
         } else if (capitalLetter == 'I') {
             System.out.println("    Первая бука имени: I");
@@ -34,10 +34,10 @@ public class IfElseStatementTheme {
         System.out.println("\n2. Поиск max и min числа\n");
         int num1 = 344;
         int num2 = 345;
-        if(num1 > num2) {
+        if (num1 > num2) {
             System.out.println("    Число 1 (" + num1 + ") - максимальное");
             System.out.println("    Число 2 (" + num2 + ") - минимальное");
-        } else if(num1 < num2) {
+        } else if (num1 < num2) {
             System.out.println("    Число 1 (" + num1 + ") - минимальное");
             System.out.println("    Число 2 (" + num2 + ") - максимальное");
         } else {
@@ -58,7 +58,7 @@ public class IfElseStatementTheme {
             } else {
                 System.out.print("отрицательным, ");
             }
-            if(num%2 == 0) {
+            if (num % 2 == 0) {
                 System.out.println("четным.");
             } else {
                 System.out.println("нечетным.");
@@ -119,7 +119,7 @@ public class IfElseStatementTheme {
         System.out.println("    Сумма вклада: " + depositSum);
         if (depositSum < 100000) {
             interesRate = 5;
-        } else if (depositSum >= 100000 && depositSum < 300000 ) {
+        } else if (depositSum >= 100000 && depositSum < 300000) {
             interesRate = 7;
         } 
         float interesSum = depositSum * interesRate / 100;
@@ -167,34 +167,35 @@ public class IfElseStatementTheme {
         }
         //9.Подсчет количества банкнот
         System.out.println("\n9.Подсчет количества банкнот\n");
-        int needSum = 567;
+        int needSum = 5674444;
         int totalHundreds = 100;
         int totalTens = 5;
         int totalOnes = 50;
         boolean isEnough = true;
         int outHundreds = needSum / 100;
         int outTens = needSum % 100 / 10;
-        int outUnits = needSum % 10;
-
-        System.out.println("    В банкомате следующие номиналы: \n" + 
-                "       " + totalHundreds + " банкнот номиналом 100 USD\n" + 
-                "       " + totalTens + " банкнот номиналом 10 USD\n" + 
-                "       " + totalOnes +" банкнот номиналом 1 USD");
-        System.out.println("\n    Требуется выдать сумму " + needSum + " USD: \n" + 
-                "       " + outHundreds + " банкнот номиналом 100\n" +
-                "       " + outTens + " банкнот номиналом 10\n"  +
-                "       " + outUnits + " банкнот номиналом 1");
-        if (outHundreds > totalHundreds) { 
-            outTens += (outHundreds - totalHundreds) * 10;
-            outHundreds = totalHundreds;
-        }
-        if (outTens > totalTens) {
-            outUnits += (outTens - totalTens) * 10;
-            outTens = totalTens;
-        }
-        if (outUnits > totalOnes) { 
+        int outOnes = needSum % 10;
+        
+        if (needSum > (totalHundreds*100 + totalTens*10 + totalOnes)) { 
             System.out.println("    В банкомате недостаточно средств для выдачи");
-        } else {
+        }
+        else {
+            System.out.println("    В банкомате следующие номиналы: \n" + 
+                    "       " + totalHundreds + " банкнот номиналом 100 USD\n" + 
+                    "       " + totalTens + " банкнот номиналом 10 USD\n" + 
+                    "       " + totalOnes +" банкнот номиналом 1 USD");
+            System.out.println("\n    Требуется выдать сумму " + needSum + " USD: \n" + 
+                    "       " + outHundreds + " банкнот номиналом 100\n" +
+                    "       " + outTens + " банкнот номиналом 10\n"  +
+                    "       " + outOnes + " банкнот номиналом 1");
+            if (outHundreds > totalHundreds) { 
+                outTens += (outHundreds - totalHundreds) * 10;
+                outHundreds = totalHundreds;
+            }
+            if (outTens > totalTens) {
+                outOnes += (outTens - totalTens) * 10;
+                outTens = totalTens;
+            }
             System.out.println("\n    Будет выдано: ");
             if (outHundreds != 0) { 
                 System.out.println("        " + outHundreds + " банкнот номиналом 100");
@@ -202,8 +203,8 @@ public class IfElseStatementTheme {
             if (outTens != 0) { 
                 System.out.println("        " + outTens + " банкнот номиналом 10");
             }
-            System.out.println("        " + outUnits + " банкнот номиналом 1");
-            }
+            System.out.println("        " + outOnes + " банкнот номиналом 1");
         }
     }
+}
 
