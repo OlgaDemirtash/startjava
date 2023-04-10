@@ -20,20 +20,23 @@ public class CyclesTheme {
 
         //2. Вывод чисел в интервале (min и max) в порядке убывания
         System.out.println("\n2. Вывод чисел в интервале (min и max) в порядке убывания\n");
-        int num1 = 10;
+        int num1 = -10;
         int num2 = 5;
         int num3 = -1;
-        int max = num3;
-        int min = num3;
-        if (num1 > num2 && num1 > num3) {
-            max = num1;
-        } else if(num2 > num1 && num2 > num3) {
+        int max = num1;
+        int min = num1;
+
+        if (num2 > num1) {
             max = num2;
         }
-        if (num1 < num2 && num1 < num3) {
-            min = num1;
-        } else if (num2 < num1 && num2 < num3) {
-            min = num2; 
+        if (num3 > max) {
+            max = num3;
+        }
+        if ( num2 < num1) {
+            min = num2;
+        }
+        if (num3 < min) {
+            min = num3;
         }
 
         System.out.print("\t(" + min + "," + max + ")\t");
@@ -48,8 +51,8 @@ public class CyclesTheme {
         System.out.printf("\t");
         while (num > 0) {
             int remainder = num % 10;
-            num = num / 10;
-            System.out.printf("" + remainder);
+            num /= 10;
+            System.out.printf("%d", remainder);
             sum += remainder;
         }
         System.out.println("\n\tСумма: " + sum);
@@ -134,7 +137,7 @@ public class CyclesTheme {
             }
             lines++;
             System.out.println();
-        } while (lines < 6 );
+        } while (lines < 6);
 
         //7. Отображение ASCII-символов
         System.out.println("\n7. Отображение ASCII-символов\n");
@@ -149,40 +152,40 @@ public class CyclesTheme {
         //8. Проверка, является ли число палиндромом
         System.out.println("\n8. Проверка, является ли число палиндромом\n");
         num = 1234321;
-        num1 = num;
-        num2 = 0;
-        while (num > 0) {
-            int remainder = num % 10;
-            num2 = num2 * 10 + remainder;
-            num = num / 10;
+        int copyNum = num;
+        int reversNum = 0;
+        while (copyNum > 0) {
+            int remainder = copyNum % 10;
+            reversNum = reversNum * 10 + remainder;
+            copyNum = copyNum / 10;
         }
-        if (num1 == num2) {
-            System.out.printf("\tЧисло %d является палиндромом\n", num1);
+        if (num == reversNum) {
+            System.out.printf("\tЧисло %d является палиндромом\n", reversNum);
         } else {
-            System.out.printf("\tЧисло %d не является палиндромом\n", num2);
+            System.out.printf("\tЧисло %d не является палиндромом\n", reversNum);
         }
 
         //9. Определение, является ли число счастливым
         System.out.println("\n9. Определение, является ли число счастливым\n");
-        int sum1 = 0;
-        int sum2 = 0;
-        int copyNum;
+        copyNum = 0;
+        int sumLeftHalf = 0;
+        int sumRightHalf = 0;
         num = 534912;
-        int digitCounter = 0;
+        int countDigits = 0;
         copyNum = num;
         while (copyNum > 0) {
             int remainder = copyNum % 10;
             copyNum /= 10;
-            digitCounter++;
-            if (digitCounter <= 3) {
-                sum1 += remainder;
+            countDigits++;
+            if (countDigits <= 3) {
+                sumRightHalf += remainder;
             } else {
-                sum2 += remainder;
+                sumLeftHalf += remainder;
             }
         }
-        System.out.println("\tСумма цифр " + num / 1000 + " = " + sum2);
-        System.out.println("\tСумма цифр " + num % 1000 + " = " + sum1);
-        if (sum1 == sum2) {
+        System.out.println("\tСумма цифр " + num / 1000 + " = " + sumLeftHalf);
+        System.out.println("\tСумма цифр " + num % 1000 + " = " + sumRightHalf);
+        if (sumRightHalf == sumLeftHalf) {
             System.out.printf("\n\tЧисло %d является счастливым\n", num);
         } else {
             System.out.printf("\n\tЧисло %d не является счастливым\n", num);
@@ -191,7 +194,7 @@ public class CyclesTheme {
         //10. Вывод таблицы умножения Пифагора
         System.out.println("\n10. Вывод таблицы умножения Пифагора\n");
         System.out.printf("       ТАБЛИЦА ПИФАГОРА\n");
-        System.out.printf("%4s%3d%3d%3d%3d%3d%3d%3d%3d\n","|",2,3,4,5,6,7,8,9);
+        System.out.printf("%4s%3d%3d%3d%3d%3d%3d%3d%3d\n", "|", 2, 3, 4, 5, 6, 7, 8, 9);
         System.out.printf("%3s\n","-----------------------------");
         for (int i = 2; i < 10; i++) {
             for (int j = 1; j < 10; j++) {
