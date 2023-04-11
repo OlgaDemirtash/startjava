@@ -52,7 +52,7 @@ public class CyclesTheme {
         while (num > 0) {
             int remainder = num % 10;
             num /= 10;
-            System.out.printf("%d", remainder);
+            System.out.print(remainder);
             sum += remainder;
         }
         System.out.println("\n\tСумма: " + sum);
@@ -153,21 +153,20 @@ public class CyclesTheme {
         System.out.println("\n8. Проверка, является ли число палиндромом\n");
         num = 1234321;
         int copyNum = num;
-        int reversNum = 0;
+        int reverseNum = 0;
         while (copyNum > 0) {
             int remainder = copyNum % 10;
-            reversNum = reversNum * 10 + remainder;
-            copyNum = copyNum / 10;
+            reverseNum = reverseNum * 10 + remainder;
+            copyNum /= 10;
         }
-        if (num == reversNum) {
-            System.out.printf("\tЧисло %d является палиндромом\n", reversNum);
+        if (num == reverseNum) {
+            System.out.printf("\tЧисло %d является палиндромом\n", reverseNum);
         } else {
-            System.out.printf("\tЧисло %d не является палиндромом\n", reversNum);
+            System.out.printf("\tЧисло %d не является палиндромом\n", reverseNum);
         }
 
         //9. Определение, является ли число счастливым
         System.out.println("\n9. Определение, является ли число счастливым\n");
-        copyNum = 0;
         int sumLeftHalf = 0;
         int sumRightHalf = 0;
         num = 534912;
