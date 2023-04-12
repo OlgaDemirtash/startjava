@@ -25,7 +25,7 @@ public class Calculator {
                 }
                 break;
             case '%':
-                    result %= number2;
+                result %= number2;
                 break;
             default:
                 System.out.println("Оператор не поддерживается");
