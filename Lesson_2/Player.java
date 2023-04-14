@@ -13,19 +13,17 @@ public class Player {
     }
     
     public int nextNumber(int min, int max) {
-        Scanner s = new Scanner(System.in);
+        Scanner console = new Scanner(System.in);
         int num = 0;
-        boolean isOutOfRange = true;
-        while (isOutOfRange) {
+        while (true) {
             System.out.println(name + " введите целое число в диапазоне [" 
                     + min + ", " + max +"]: " );
-            String line = s.nextLine();
+            String line = console.nextLine();
             try {
                 num = Integer.parseInt(line);
                 if (num >= min && num <= max) {
-                    isOutOfRange = false;
-                } else { 
-                    isOutOfRange = true;
+                    return num;
+                } else {
                     System.out.println("Число за пределами диапазона");
                     continue;
                 }
@@ -34,7 +32,7 @@ public class Player {
                 continue;
             }
         }
-    return num;
+    
     }
 }
 

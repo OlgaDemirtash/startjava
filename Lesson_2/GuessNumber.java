@@ -21,14 +21,13 @@ public class GuessNumber {
     public void play() {
         Player currentPlayer = player1;
         boolean isWin = false;
-        while (!isWin) {
+        while (true) {
             int answer = currentPlayer.nextNumber(min, max);
             if (answer > hiddenNumber) {
                 System.out.printf("Число %d больше того, что загадал компьютер\n", answer);
             } else if (answer < hiddenNumber) {
                 System.out.printf("Число %d меньше того, что загадал компьютер\n", answer);
             } else {
-                isWin = true;
                 break;
             }
             if (currentPlayer.equals(player1)) {

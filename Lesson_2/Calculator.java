@@ -3,28 +3,23 @@ public class Calculator {
         int result = number1;
         switch (sign) {
             case '+':
-                result += number2;
-                break;
+                return result += number2;
             case '-':
-                result -= number2;
-                break;
+                return result -= number2;
             case '*':
-                result *= number2;
-                break;
+                return result *= number2;
             case '/':
-                result /= number2;
-                break;
+                return result /= number2;
             case '^':
                 for (int i = 1; i < number2; i++) {
                     result *= number1;
                 }
-                break;
+                return result;
             case '%':
-                        result %= number2;
-                    break;
+                return result %= number2;
             default:
                 System.out.println("Оператор не поддерживается");
-            }
-            return result;
+        }
+        return result;
     }
 }
