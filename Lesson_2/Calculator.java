@@ -1,25 +1,31 @@
 public class Calculator {
-    public int run (int number1, int number2, char sign) {
+    public void calculate(int number1, int number2, char sign) {
         int result = number1;
         switch (sign) {
             case '+':
-                return result += number2;
+                result += number2;
+                break;
             case '-':
-                return result -= number2;
+                result -= number2;
+                break;
             case '*':
-                return result *= number2;
+                result *= number2;
+                break;
             case '/':
-                return result /= number2;
+                result /= number2;
+                break;
             case '^':
                 for (int i = 1; i < number2; i++) {
                     result *= number1;
                 }
-                return result;
+                break;
             case '%':
-                return result %= number2;
+                result %= number2;
+                break;
             default:
                 System.out.println("Оператор не поддерживается");
+                return;
         }
-        return result;
+        System.out.println("\n" + number1 + " " + sign + " " + number2 + " = " + result);
     }
 }

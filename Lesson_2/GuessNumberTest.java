@@ -22,11 +22,7 @@ public class GuessNumberTest {
                 System.out.println("Хотите продолжить игру? [yes/no]:");
                 answer = console.nextLine();
             } while (!answer.trim().equals(YES) && !answer.trim().equals(NO));
-            if (answer.trim().equals(YES)) {
                 myGame.setHiddenNumber(min,max);
-            } else {
-                break;
-            }
-        } while (true);
+        } while (!answer.trim().equals(NO));
     }
 }
