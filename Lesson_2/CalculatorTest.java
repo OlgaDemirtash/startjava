@@ -11,12 +11,13 @@ public class CalculatorTest {
         int number2 = 0;
         Calculator calculator = new Calculator();
         String answer;
-
+        Scanner console;
+        console = new Scanner(System.in);
         do {
-            number1 = getNextNumber("Введите первое число");
-            sign = getSign("Введите знак математической операции :");
-            number2 = getNextNumber("Введите второе число");
-            calculator.calculate(number1, number2, 'd');
+            number1 = inputNumber("первое", console);
+            sign = inputSign("Введите знак математической операции: ", console);
+            number2 = inputNumber("второе", console);
+            calculator.calculate(number1, number2, sign);
 
             do {
                 System.out.println("Хотите продолжить вычисления? [yes/no]:");
@@ -24,11 +25,11 @@ public class CalculatorTest {
             } while (!answer.trim().equals(YES) && !answer.trim().equals(NO));
         } while(!answer.trim().equals(NO));
     }
-    private static int getNextNumber(String info) {
+
+    private static int  inputNumber(String info, Scanner console) {
         int number;
-        getConsole();
         while (true) {
-            System.out.println(info);
+            System.out.printf("Введите %s число: ", info);
             String line = console.nextLine();
             try {
                 number = Integer.parseInt(line);
@@ -38,22 +39,15 @@ public class CalculatorTest {
             }
          }
     }
-    private static char getSign(String info) {
-        char sign;
-        getConsole();
+
+    private static char inputSign(String info, Scanner console) {
         do {
-            System.out.println(info);
-            sign = console.nextLine().charAt(0); 
+            System.out.print(info);
+            char sign = console.nextLine().charAt(0); 
             if (sign == '+' || sign == '-' || sign == '*'|| sign == '/'|| sign == '^'|| sign == '%') {
                 return sign;
-            } else {
-                System.out.println("Неправильный ввод");
-            }
+            } 
+            System.out.println("Неправильный ввод");
         } while (true);
-    }
-    private static void getConsole() {
-        if (console == null) {
-            console = new Scanner(System.in);
-        }
     }
 }

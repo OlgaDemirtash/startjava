@@ -24,9 +24,9 @@ public class GuessNumber {
         while (true) {
             int answer = currentPlayer.nextNumber(min, max);
             if (answer > hiddenNumber) {
-                System.out.printf("Число %d больше того, что загадал компьютер\n", answer);
+                System.out.printf("Число %d больше того, что загадал компьютер\n\n", answer);
             } else if (answer < hiddenNumber) {
-                System.out.printf("Число %d меньше того, что загадал компьютер\n", answer);
+                System.out.printf("Число %d меньше того, что загадал компьютер\n\n", answer);
             } else {
                 break;
             }
@@ -35,7 +35,6 @@ public class GuessNumber {
             } else {
                 currentPlayer = player1;
             }
-            System.out.println();
         }
         System.out.println("Игрок с именем " + currentPlayer.getName() + " победил!");
     }

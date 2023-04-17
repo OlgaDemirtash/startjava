@@ -26,6 +26,6 @@ public class Calculator {
                 System.out.println("Оператор не поддерживается");
                 return;
         }
-        System.out.println("\n" + number1 + " " + sign + " " + number2 + " = " + result);
+        System.out.println(number1 + " " + sign + " " + number2 + " = " + result);
     }
 }
