@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class GuessNumber {
 
     private int hiddenNumber;
@@ -6,12 +8,11 @@ public class GuessNumber {
     private int min;
     private int max;
 
-    public GuessNumber(int min, int max, Player player1, Player player2) {
-        this.min = min;
-        this.max = max;
+    public GuessNumber(Player player1, Player player2) {
+        min = 1;
+        max = 100;
         this.player1 = player1;
         this.player2 = player2;
-        setHiddenNumber(min, max);
     }
 
     public void setHiddenNumber(int min, int max) {
@@ -20,9 +21,9 @@ public class GuessNumber {
 
     public void play() {
         Player currentPlayer = player1;
-        boolean isWin = false;
+        setHiddenNumber(min, max);
         while (true) {
-            int answer = currentPlayer.nextNumber(min, max);
+            int answer = nextNumber(min, max, currentPlayer.getName());
             if (answer > hiddenNumber) {
                 System.out.printf("Число %d больше того, что загадал компьютер\n\n", answer);
             } else if (answer < hiddenNumber) {
@@ -37,5 +38,25 @@ public class GuessNumber {
             }
         }
         System.out.println("Игрок с именем " + currentPlayer.getName() + " победил!");
+    }
+
+    public int nextNumber(int min, int max, String name) {
+        Scanner console = new Scanner(System.in);
+        int num = 0;
+        while (true) {
+            System.out.println(name + " введите целое число в диапазоне [" 
+                    + min + ", " + max +"]: " );
+            String line = console.nextLine();
+            try {
+                num = Integer.parseInt(line);
+                if (num >= min && num <= max) {
+                    return num;
+                } else {
+                    System.out.println("Число за пределами диапазона");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Неправильный ввод");
+            }
+        }
     }
 }

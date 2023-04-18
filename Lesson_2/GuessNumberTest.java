@@ -12,17 +12,15 @@ public class GuessNumberTest {
         System.out.println("Введите имя игрока 2: ");
         Player player2 = new Player(console.nextLine());
 
-        int min = 1;
-        int max = 100;
-        GuessNumber myGame = new GuessNumber(min, max, player1, player2);
+
+        String answer;
+        GuessNumber game = new GuessNumber(player1, player2);
         do {
-            String answer;
-            myGame.play();
+            game.play();
             do {
                 System.out.println("Хотите продолжить игру? [yes/no]:");
                 answer = console.nextLine();
             } while (!answer.trim().equals(YES) && !answer.trim().equals(NO));
-                myGame.setHiddenNumber(min,max);
         } while (!answer.trim().equals(NO));
     }
 }

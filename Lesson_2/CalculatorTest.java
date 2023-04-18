@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class CalculatorTest {
     final static String YES = "yes";
     final static String NO = "no";
-    private static Scanner console;
     
     public static void main(String[] args) {
         char sign;
@@ -11,11 +10,10 @@ public class CalculatorTest {
         int number2 = 0;
         Calculator calculator = new Calculator();
         String answer;
-        Scanner console;
-        console = new Scanner(System.in);
+        Scanner console = new Scanner(System.in);
         do {
             number1 = inputNumber("первое", console);
-            sign = inputSign("Введите знак математической операции: ", console);
+            sign = inputSign(console);
             number2 = inputNumber("второе", console);
             calculator.calculate(number1, number2, sign);
 
@@ -26,28 +24,28 @@ public class CalculatorTest {
         } while(!answer.trim().equals(NO));
     }
 
-    private static int  inputNumber(String info, Scanner console) {
+    private static int inputNumber(String position, Scanner console) {
         int number;
         while (true) {
-            System.out.printf("Введите %s число: ", info);
+            System.out.printf("Введите %s целое число: ", position);
             String line = console.nextLine();
             try {
                 number = Integer.parseInt(line);
                 return number;
             } catch (NumberFormatException e) {
-                System.out.println("Неправильный ввод");
+                System.out.println("Вы ввели не целое число, повторите ввод");
             }
          }
     }
 
-    private static char inputSign(String info, Scanner console) {
-        do {
-            System.out.print(info);
+    private static char inputSign(Scanner console) {
+        while (true) {
+            System.out.print("Введите знак математической операции (* / - + %): ");
             char sign = console.nextLine().charAt(0); 
             if (sign == '+' || sign == '-' || sign == '*'|| sign == '/'|| sign == '^'|| sign == '%') {
                 return sign;
             } 
-            System.out.println("Неправильный ввод");
-        } while (true);
+            System.out.println("Вы ввели недопустимый знак, повторите ввод ");
+        }
     }
 }
