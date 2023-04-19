@@ -11,6 +11,7 @@ public class CalculatorTest {
         Calculator calculator = new Calculator();
         String answer;
         Scanner console = new Scanner(System.in);
+        
         do {
             number1 = inputNumber("первое", console);
             sign = inputSign(console);

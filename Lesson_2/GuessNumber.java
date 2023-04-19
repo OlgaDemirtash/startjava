@@ -15,21 +15,23 @@ public class GuessNumber {
         this.player2 = player2;
     }
 
-    public void setHiddenNumber(int min, int max) {
-        this.hiddenNumber = (int) ((Math.random() * (max - min + 1) + min));
+    private void setHiddenNumber() {
+        hiddenNumber = (int) (Math.random() * max + min);
     }
 
     public void play() {
         Player currentPlayer = player1;
-        setHiddenNumber(min, max);
+        setHiddenNumber();
         while (true) {
-            int answer = nextNumber(min, max, currentPlayer.getName());
-            if (answer > hiddenNumber) {
-                System.out.printf("Число %d больше того, что загадал компьютер\n\n", answer);
-            } else if (answer < hiddenNumber) {
-                System.out.printf("Число %d меньше того, что загадал компьютер\n\n", answer);
-            } else {
-                break;
+            int nextNumber = guessNextNumber(currentPlayer.getName());
+            if (nextNumber == hiddenNumber) {
+                System.out.println("Игрок с именем " + currentPlayer.getName() + " победил!");
+                return;
+            }
+            if (nextNumber > hiddenNumber) {
+                System.out.printf("Число %d больше того, что загадал компьютер\n\n", nextNumber);
+            } else if (nextNumber < hiddenNumber) {
+                System.out.printf("Число %d меньше того, что загадал компьютер\n\n", nextNumber);
             }
             if (currentPlayer.equals(player1)) {
                 currentPlayer = player2;
@@ -37,23 +39,21 @@ public class GuessNumber {
                 currentPlayer = player1;
             }
         }
-        System.out.println("Игрок с именем " + currentPlayer.getName() + " победил!");
     }
 
-    public int nextNumber(int min, int max, String name) {
+    private int guessNextNumber(String name) {
         Scanner console = new Scanner(System.in);
-        int num = 0;
+        int number = 0;
         while (true) {
             System.out.println(name + " введите целое число в диапазоне [" 
                     + min + ", " + max +"]: " );
             String line = console.nextLine();
             try {
-                num = Integer.parseInt(line);
-                if (num >= min && num <= max) {
-                    return num;
-                } else {
-                    System.out.println("Число за пределами диапазона");
+                number = Integer.parseInt(line);
+                if (number >= min && number <= max) {
+                    return number;
                 }
+                System.out.println("Число за пределами диапазона");
             } catch (NumberFormatException e) {
                 System.out.println("Неправильный ввод");
             }
