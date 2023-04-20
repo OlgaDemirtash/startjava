@@ -20,10 +20,15 @@ public class GuessNumber {
     }
 
     public void play() {
-        Player currentPlayer = player1;
         setHiddenNumber();
+        checkNumber();
+
+    }
+
+    private void checkNumber() {
+        Player currentPlayer = player1;
         while (true) {
-            int nextNumber = guessNextNumber(currentPlayer.getName());
+            int nextNumber = inputNumber(currentPlayer.getName());
             if (nextNumber == hiddenNumber) {
                 System.out.println("Игрок с именем " + currentPlayer.getName() + " победил!");
                 return;
@@ -33,15 +38,15 @@ public class GuessNumber {
             } else if (nextNumber < hiddenNumber) {
                 System.out.printf("Число %d меньше того, что загадал компьютер\n\n", nextNumber);
             }
-            if (currentPlayer.equals(player1)) {
+            if (currentPlayer == player1) {
                 currentPlayer = player2;
             } else {
                 currentPlayer = player1;
             }
         }
     }
-
-    private int guessNextNumber(String name) {
+    
+    private int inputNumber(String name) {
         Scanner console = new Scanner(System.in);
         int number = 0;
         while (true) {
