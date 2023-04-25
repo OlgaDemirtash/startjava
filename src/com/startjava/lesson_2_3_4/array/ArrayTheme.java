@@ -35,39 +35,39 @@ public class ArrayTheme {
     private static void arrayValuesProd() {
         //2. Вывод произведения элементов массива
         System.out.println("2. Вывод произведения элементов массива\n");
-        int[] intNums = new int[10];
+        int[] intArr = new int[10];
         int prod = 1;
-        int len = intNums.length - 1;
+        int len = intArr.length - 1;
         for (int i = 0; i <= len; i++) {
-            intNums[i] = i;
+            intArr[i] = i;
         }
         for (int i = 1; i < len; i++) {
-            prod *= intNums[i];
-            System.out.print((i != len - 1) ? (intNums[i] + " * ") : intNums[i] + " = " + prod);
+            prod *= intArr[i];
+            System.out.print((i != len - 1) ? (intArr[i] + " * ") : intArr[i] + " = " + prod);
         }
-        System.out.println("\n" + intNums[0] + " " + intNums[9]);
+        System.out.println("\n" + intArr[0] + " " + intArr[9]);
         System.out.println();
     }
 
     private static void arrayValuesDelete() {
         //3. Удаление элементов массива
         System.out.println("3. Удаление элементов массива\n");
-        float[] floatNums = new float[15];
+        float[] floatArr = new float[15];
         int nullValues = 0;
-        for (int i = 0; i < floatNums.length; i++) {
-            floatNums[i] = (float) Math.random();
+        for (int i = 0; i < floatArr.length; i++) {
+            floatArr[i] = (float) Math.random();
         }
         System.out.println();
-        printArray(floatNums, 6);
-        int len = floatNums.length;
-        float tmpFloatNums = floatNums[len / 2];
+        printArray(floatArr, 6);
+        int len = floatArr.length;
+        float tmpFloatNums = floatArr[len / 2];
         for (int i = 0; i < len; i++) {
-            if (floatNums[i] > tmpFloatNums) {
-                floatNums[i] = 0;
+            if (floatArr[i] > tmpFloatNums) {
+                floatArr[i] = 0;
                 nullValues++;
             }
         }
-        printArray(floatNums, 6);
+        printArray(floatArr, 6);
         System.out.println("\nКоличество обнуленных ячеек: " + nullValues);
         System.out.println();
     }
@@ -95,9 +95,7 @@ public class ArrayTheme {
         for (int i = 0; i < intArr.length; i++) {
             while (true) {
                 int num = (int) ((Math.random() * (max - min)) + min);
-                if (isNumExistInArray(num, intArr)) {
-                    continue;
-                } else {
+                if (!isNumExistInArray(num, intArr)) {
                     intArr[i] = num;
                     break;
                 }
@@ -116,8 +114,8 @@ public class ArrayTheme {
 //      String[] strArr = {"    ", ""};
 //      String[] strArr = {"    ", "AA", "", "E", "FF", "G", ""};
 //      String[] strArr = {"FF", "G", ""};
-        for (int i = 0; i < strArr.length; i++) {
-            if (strArr[i].trim() != " " && strArr[i].trim() != "") {
+        for (String str : strArr) {
+            if (!str.isBlank()) {
                 newStrArrLength++;
             }
         }
@@ -125,7 +123,6 @@ public class ArrayTheme {
 
         String[] newStrArr = new String[newStrArrLength];
         int notNullCount = 0;
-        int nullCount = 0;
         int startPos = 0;
         for (int i = 0; i < strArr.length; i++) {
             if (!strArr[i].isBlank()) {
@@ -134,10 +131,9 @@ public class ArrayTheme {
                 if (notNullCount != 0) {
                     System.arraycopy(strArr, i - notNullCount, newStrArr, startPos, notNullCount);
                     startPos += notNullCount;
-                    nullCount = 0;
+
                     notNullCount = 0;
                 }
-                nullCount++;
             }
         }
         printArray(newStrArr);
@@ -164,8 +160,8 @@ public class ArrayTheme {
     }
 
     public static boolean isNumExistInArray(int num, int[] intArr) {
-        for (int i = 0; i < intArr.length; i++) {
-            if (num == intArr[i]) {
+        for (int j : intArr) {
+            if (num == j) {
                 return true;
             }
         }
