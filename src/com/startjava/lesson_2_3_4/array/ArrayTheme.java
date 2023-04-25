@@ -76,10 +76,10 @@ public class ArrayTheme {
         //4. Вывод элементов массива лесенкой в обратном порядке
         System.out.println("4. Вывод элементов массива лесенкой в обратном порядке\n");
         char[] charArr = new char[26];
-        int len = 0;
+        int j = 0;
         for (int i = 65; i < 91; i++) {
-            charArr[len] = (char) i;
-            len++;
+            charArr[j] = (char) i;
+            j++;
         }
         printArray(charArr);
         System.out.println();
