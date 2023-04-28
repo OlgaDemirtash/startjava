@@ -18,10 +18,9 @@ public class ArrayTheme {
         int[] intsArr = {5, 3, 7, 2, 1, 4, 6};
         printArray(intsArr);
         int len = intsArr.length;
-        for (int i = 0; i < len / 2; i++) {
+        for (int i = 0; i < intsArr.length / 2; i++) {
             int num = intsArr[i];
-            len--;
-            intsArr[i] = intsArr[len];
+            intsArr[i] = intsArr[--len];
             intsArr[len] = num;
 
         }
@@ -87,19 +86,19 @@ public class ArrayTheme {
         System.out.println("5. Генерация уникальных чисел\n");
         int min = 60;
         int max = 100;
-        int[] intArr = new int[30];
+        int[] uniqueNums = new int[30];
 
-        for (int i = 0; i < intArr.length; i++) {
+        for (int i = 0; i < uniqueNums.length; i++) {
             while (true) {
                 int num = (int) ((Math.random() * (max - min)) + min);
-                if (!isNumExistInArray(num, intArr)) {
-                    intArr[i] = num;
+                if (!isNumExistInArray(num, uniqueNums)) {
+                    uniqueNums[i] = num;
                     break;
                 }
             }
         }
-        Arrays.sort(intArr);
-        printArray(intArr, 10);
+        Arrays.sort(uniqueNums);
+        printArray(uniqueNums, 10);
         System.out.println();
     }
 
