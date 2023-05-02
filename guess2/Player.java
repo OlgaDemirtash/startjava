@@ -45,7 +45,6 @@ public class Player {
         System.out.println("Число за пределами диапазона");
         return false;
     }
-
     public void clearInputNumbers() {
         Arrays.fill(inputNumbers, 0, attemptsCount, 0);
         attemptsCount = 0;
@@ -55,7 +54,7 @@ public class Player {
         int[] inputNumbers = getInputNumbers();
         int len = inputNumbers.length;
         for (int i = 0; i < len; i++) {
-            System.out.print(inputNumbers[i] + ((i == len/2 - 1) ? "\n" : " " ));
+            System.out.print(inputNumbers[i] + ((i == len/2) ? "\n" : " " ));
         }
         System.out.println();
     }

@@ -1,33 +1,16 @@
 package com.startjava.lesson_2_3_4.calculator;
 
 public class Calculator {
-    public void calculate(int number1, int number2, char sign) {
-        int result = number1;
+    public static double calculate(int number1, int number2, String sign) {
+        double result = number1;
         switch (sign) {
-            case '+':
-                result += number2;
-                break;
-            case '-':
-                result -= number2;
-                break;
-            case '*':
-                result *= number2;
-                break;
-            case '/':
-                result /= number2;
-                break;
-            case '^':
-                for (int i = 1; i < number2; i++) {
-                    result *= number1;
-                }
-                break;
-            case '%':
-                result %= number2;
-                break;
-            default:
-                System.out.println("Оператор не поддерживается");
-                return;
+            case "+" -> result = Math.addExact(number1, number2);
+            case "-" -> result = Math.subtractExact(number1, number2);
+            case "*" -> result = Math.multiplyExact(number1, number2);
+            case "/" -> result /= number2;
+            case "^" -> result = Math.pow((double) number1, (double) number2);
+            case "%" -> result %= number2;
         }
-        System.out.println(number1 + " " + sign + " " + number2 + " = " + result);
+        return result;
     }
 }
