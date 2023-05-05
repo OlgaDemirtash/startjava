@@ -8,8 +8,8 @@ public class Calculator {
         try {
             elements = checkExpression(parseExpression(expression));
 
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e.getMessage());
+        } catch (NumberFormatException | UnsupportedOperationException | IndexOutOfBoundsException e) {
+            throw new IllegalCallerException(e.getMessage());
         }
         int number1 = Integer.parseInt(elements[0]);
         String sign = elements[1];
