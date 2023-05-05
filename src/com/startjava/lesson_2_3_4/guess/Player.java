@@ -5,25 +5,18 @@ import java.util.Arrays;
 public class Player {
 
     private String name;
-    private String[] numbers;
     private int attemptsCount = 0;
     private int[] inputNumbers;
-    private int maxAttempts;
 
     public Player(String name, int maxAttempts) {
         this.name = name;
-        this.maxAttempts = maxAttempts;
         inputNumbers = new int[maxAttempts];
     }
 
-    public int getAttemptsCounter() {
+    public int getAttemptsCount() {
         return attemptsCount;
     }
 
-    public void setAttemptsCount(int attemptsCount) {
-        this.attemptsCount = attemptsCount;
-    }
-    
     public String getName() {
         return name;
     }
@@ -32,32 +25,22 @@ public class Player {
         return Arrays.copyOf(inputNumbers, attemptsCount);
     }
 
-    public void increaseAttemptsCount() {
-        attemptsCount++;
-    }
-
     public boolean addInputNumber(int number, int min, int max) {
         if (number >= min && number <= max) {
             inputNumbers[attemptsCount] = number;
             increaseAttemptsCount();
             return true;
         }
-        System.out.println("Число за пределами диапазона");
         return false;
+    }
+
+    public void increaseAttemptsCount() {
+        attemptsCount++;
     }
 
     public void clearInputNumbers() {
         Arrays.fill(inputNumbers, 0, attemptsCount, 0);
         attemptsCount = 0;
-    }
-    public void printPlayerNumbers() {
-        System.out.println("Игрок " + getName() + " ввёл следующие числа: ");
-        int[] inputNumbers = getInputNumbers();
-        int len = inputNumbers.length;
-        for (int i = 0; i < len; i++) {
-            System.out.print(inputNumbers[i] + ((i == len/2 - 1) ? "\n" : " " ));
-        }
-        System.out.println();
     }
 }
 

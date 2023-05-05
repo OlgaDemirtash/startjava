@@ -11,8 +11,8 @@ public class GuessNumber {
     private int maxAttempts;
 
     public GuessNumber(Player[] players, int maxAttempts, int min, int max) {
-        this.min = 1;
-        this.max = 100;
+        this.min = min;
+        this.max = max;
         this.players = players;
         this.maxAttempts = maxAttempts;
     }
@@ -21,28 +21,26 @@ public class GuessNumber {
         hiddenNumber = (int) (Math.random() * max + min);
     }
 
-    public void play() {
-        System.out.printf("У каждого игрога по %d попыток\n", maxAttempts);
+    public Player[] play() {
         setHiddenNumber();
-        checkNumber();
+        return checkNumber();
     }
 
-    private void checkNumber() {
+    private Player[] checkNumber() {
         while (true) {
             for (Player currentPlayer : players) {
-                if (currentPlayer.getAttemptsCounter() == maxAttempts) {
+                if (currentPlayer.getAttemptsCount() == maxAttempts) {
                     System.out.println("У " + currentPlayer.getName() + "закончились попытки");
-                    printPlayersNumbers();
-                    return;
+                    return players;
                 }
                 int nextNumber = inputNumber(currentPlayer);
                 if (nextNumber == hiddenNumber) {
                     System.out.println("Игрок " + currentPlayer.getName() + " угадал число " + nextNumber
-                            + " с " + currentPlayer.getAttemptsCounter() + " попытки!\n");
-                    printPlayersNumbers();
-                    return;
+                            + " с " + currentPlayer.getAttemptsCount() + " попытки!\n");
+                    return players;
                 }
-                System.out.printf("Число %d" + ((nextNumber > hiddenNumber) ? " больше " : " меньше ") + "того, что загадал компьютер\n\n", nextNumber);
+                System.out.printf("Число %d" + ((nextNumber > hiddenNumber) ? " больше " : " меньше ")
+                        + "того, что загадал компьютер\n\n", nextNumber);
             }
         }
     }
@@ -56,17 +54,12 @@ public class GuessNumber {
             int number = Integer.parseInt(line);
             if (player.addInputNumber(number, min, max)) {
                 return number;
+            } else {
+                System.out.println("Число за пределами диапазона");
             }
         } catch (NumberFormatException e) {
             System.out.println("Неправильный ввод");
         }
         return inputNumber(player);
     }
-
-    private void printPlayersNumbers() {
-        for (Player player : players) {
-            player.printPlayerNumbers();
-        }
-    }
-
 }
