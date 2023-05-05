@@ -8,35 +8,22 @@ public class CalculatorTest {
     final static String NO = "no";
 
     public static void main(String[] args) {
-        calc();
-    }
-
-    private static void calc() {
-        String[] exprElements = inputExpression();
-        double result = Calculator.calculate(exprElements);
-        outputExpression(exprElements, result);
-        if (checkAnswer()) {
-            calc();
-        }
-    }
-
-    private static String[] inputExpression() {
+        double result;
         Scanner console = new Scanner(System.in);
-        String[] exprElements;
         System.out.print("Введите математическое выражение: ");
         String expression = console.nextLine();
         try {
-            exprElements = Calculator.getExpressionElements(expression);
-        } catch (Exception e) {
+            result = Calculator.calculate(expression);
+        } catch (RuntimeException e) {
             System.out.println(e.getMessage() + "\n");
-            return inputExpression();
+            main(args);
+            return;
         }
-        return exprElements;
-    }
-
-    private static void outputExpression(String[] exprElements, double result) {
         DecimalFormat dF = new DecimalFormat("#####.###");
-        System.out.println(exprElements[0] + " " + exprElements[1] + " " + exprElements[2] + " = " + dF.format(result));
+        System.out.println(expression + " = " + dF.format(result));
+        if (checkAnswer()) {
+            main(args);
+        }
     }
 
     private static boolean checkAnswer() {
