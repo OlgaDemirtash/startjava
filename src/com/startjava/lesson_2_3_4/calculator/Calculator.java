@@ -1,13 +1,10 @@
 package com.startjava.lesson_2_3_4.calculator;
 
-import java.util.Arrays;
-
 public class Calculator {
     public static double calculate(String expression) {
         String[] elements;
         try {
             elements = checkExpression(parseExpression(expression));
-
         } catch (NumberFormatException | UnsupportedOperationException | IndexOutOfBoundsException e) {
             throw new IllegalCallerException(e.getMessage());
         }
@@ -25,32 +22,9 @@ public class Calculator {
         };
     }
 
-    public static String[] checkExpression(String expression) {
-        String[] exprElements = Arrays.copyOf(expression.trim().split(" "), 3);
-        char pos = '1';
-        if (!isSign(exprElements[1])) {
-            throw new UnsupportedOperationException("Вы ввели недопустимый знак " + exprElements[1]);
-        } else {
-            try {
-                isNumber(exprElements[0]);
-                pos = '2';
-                isNumber(exprElements[2]);
-            } catch (NumberFormatException e) {
-                throw new NumberFormatException((e.getMessage() + "в позицию " + pos));
-            }
-        }
-        return exprElements;
-    }
-
-    public static String parseExpression(String expression) {
+    private static String parseExpression(String expression) {
         expression = expression.replaceAll("\\s", "");
-        if (expression.contains(".") || expression.contains(",")) {
-            throw new NumberFormatException("Допускаются только целые числа и операции  /*-+=%^");
-        }
-        expression = expression.replaceAll("[^ 0-9/*%^+-]", "");
-        if (expression.length() < 3) {
-            throw new IndexOutOfBoundsException("Недопустимая длинна выражения" + expression.length());
-        }
+        expression = expression.replaceAll("[^ 0-9/*%^+-.,]", "");
         expression = expression.replaceAll("[/*%^+-]", " $0 ");
         expression = expression.replaceAll("\\s+", " ");
         expression = expression.replaceAll("[/*%^+-](?=-\\d)", " $0 ");
@@ -59,21 +33,39 @@ public class Calculator {
         return expression;
     }
 
+    private static String[] checkExpression(String expression) {
+        if (expression.length() < 5) {
+            throw new IndexOutOfBoundsException("Недопустимая длинна выражения ");
+        }
+        String[] exprElements = expression.trim().split(" ");
+        if (!isSign(exprElements[1])) {
+            throw new UnsupportedOperationException("Вы ввели недопустимый знак " + exprElements[1]);
+        }
+        char pos = '1';
+        try {
+            isStrPositiveIntNumber(exprElements[0]);
+            pos = '2';
+            isStrPositiveIntNumber(exprElements[2]);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException((e.getMessage() + "в позицию " + pos));
+        }
+        return exprElements;
+    }
+
     private static boolean isSign(String str) {
         return str.equals("+") || str.equals("-") || str.equals("*")
                 || str.equals("/") || str.equals("^") || str.equals("%");
     }
 
-    private static void isNumber(String str) {
+    private static void isStrPositiveIntNumber(String str) {
+        int number;
         try {
-            int number = Integer.parseInt(str);
-            if (number < 0) {
-                throw new NumberFormatException("Вы ввели отрицательное число ");
-            }
+            number = Integer.parseInt(str);
         } catch (NumberFormatException e) {
             throw new NumberFormatException("Вы ввели не целое число ");
         }
+        if (number < 0) {
+            throw new NumberFormatException("Вы ввели отрицательное число ");
+        }
     }
-
-
 }

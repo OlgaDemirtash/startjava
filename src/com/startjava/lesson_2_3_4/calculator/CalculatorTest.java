@@ -8,31 +8,30 @@ public class CalculatorTest {
     final static String NO = "no";
 
     public static void main(String[] args) {
-        double result;
         Scanner console = new Scanner(System.in);
-        System.out.print("Введите математическое выражение: ");
-        String expression = console.nextLine();
-        try {
-            result = Calculator.calculate(expression);
-        } catch (RuntimeException e) {
-            System.out.println(e.getMessage() + "\n");
-            main(args);
-            return;
-        }
-        DecimalFormat dF = new DecimalFormat("#####.###");
-        System.out.println(expression + " = " + dF.format(result));
-        if (checkAnswer()) {
-            main(args);
+        String answer = YES;
+        while (true) {
+            if (!answer.trim().equals(YES) && !answer.trim().equals(NO)) {
+                System.out.println("Хотите продолжить вычисления? [yes/no]:");
+                answer = console.nextLine();
+                continue;
+            }
+            if (answer.trim().equals(NO)) {
+                break;
+            }
+            System.out.print("Введите математическое выражение: ");
+            String expression = console.nextLine();
+            try {
+                printResult(expression, Calculator.calculate(expression));
+                answer = "";
+            } catch (RuntimeException e) {
+                System.out.println(e.getMessage() + "\n");
+            }
         }
     }
 
-    private static boolean checkAnswer() {
-        Scanner console = new Scanner(System.in);
-        System.out.println("Хотите продолжить вычисления? [yes/no]:");
-        String answer = console.nextLine();
-        if (!answer.trim().equals(YES) && !answer.trim().equals(NO)) {
-            return checkAnswer();
-        }
-        return (answer.trim().equals(YES));
+    private static void printResult(String expression, double result) {
+        DecimalFormat dF = new DecimalFormat("#####.###");
+        System.out.println(expression + " = " + dF.format(result));
     }
 }
