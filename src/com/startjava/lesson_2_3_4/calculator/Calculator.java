@@ -37,19 +37,19 @@ public class Calculator {
         if (expression.length() < 5) {
             throw new IndexOutOfBoundsException("Недопустимая длинна выражения ");
         }
-        String[] exprElements = expression.trim().split(" ");
-        if (!isSign(exprElements[1])) {
-            throw new UnsupportedOperationException("Вы ввели недопустимый знак " + exprElements[1]);
+        String[] elements = expression.trim().split(" ");
+        if (!isSign(elements[1])) {
+            throw new UnsupportedOperationException("Вы ввели недопустимый знак " + elements[1]);
         }
         char pos = '1';
         try {
-            isStrPositiveIntNumber(exprElements[0]);
+            isPositiveInt(elements[0]);
             pos = '2';
-            isStrPositiveIntNumber(exprElements[2]);
+            isPositiveInt(elements[2]);
         } catch (NumberFormatException e) {
             throw new NumberFormatException((e.getMessage() + "в позицию " + pos));
         }
-        return exprElements;
+        return elements;
     }
 
     private static boolean isSign(String str) {
@@ -57,7 +57,7 @@ public class Calculator {
                 || str.equals("/") || str.equals("^") || str.equals("%");
     }
 
-    private static void isStrPositiveIntNumber(String str) {
+    private static void isPositiveInt(String str) {
         int number;
         try {
             number = Integer.parseInt(str);

@@ -10,24 +10,20 @@ public class CalculatorTest {
     public static void main(String[] args) {
         Scanner console = new Scanner(System.in);
         String answer = YES;
-        while (true) {
-            if (!answer.trim().equals(YES) && !answer.trim().equals(NO)) {
-                System.out.println("Хотите продолжить вычисления? [yes/no]:");
-                answer = console.nextLine();
-                continue;
+        do {
+            if (answer.trim().equals(YES)) {
+                System.out.print("Введите математическое выражение: ");
+                String expression = console.nextLine();
+                try {
+                    printResult(expression, Calculator.calculate(expression));
+                } catch (RuntimeException e) {
+                    System.out.println(e.getMessage() + "\n");
+                    continue;
+                }
             }
-            if (answer.trim().equals(NO)) {
-                break;
-            }
-            System.out.print("Введите математическое выражение: ");
-            String expression = console.nextLine();
-            try {
-                printResult(expression, Calculator.calculate(expression));
-                answer = "";
-            } catch (RuntimeException e) {
-                System.out.println(e.getMessage() + "\n");
-            }
-        }
+            System.out.println("Хотите продолжить вычисления? [yes/no]:");
+            answer = console.nextLine();
+        } while (!answer.trim().equals(NO));
     }
 
     private static void printResult(String expression, double result) {
