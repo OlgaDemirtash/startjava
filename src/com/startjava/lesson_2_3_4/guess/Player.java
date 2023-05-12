@@ -4,43 +4,39 @@ import java.util.Arrays;
 
 public class Player {
 
-    private String name;
-    private int attemptsCount = 0;
-    private int[] inputNumbers;
+    private final String name;
+    private int countAttempts;
+    private final int[] inputNumbers;
 
     public Player(String name, int maxAttempts) {
         this.name = name;
         inputNumbers = new int[maxAttempts];
     }
 
-    public int getAttemptsCount() {
-        return attemptsCount;
-    }
-
     public String getName() {
         return name;
     }
 
+    public int getCountAttempts() {
+        return countAttempts;
+    }
+
     public int[] getInputNumbers() {
-        return Arrays.copyOf(inputNumbers, attemptsCount);
+        return Arrays.copyOf(inputNumbers, countAttempts);
     }
 
     public boolean addInputNumber(int number, int min, int max) {
         if (number >= min && number <= max) {
-            inputNumbers[attemptsCount] = number;
-            increaseAttemptsCount();
+            inputNumbers[countAttempts] = number;
+            countAttempts++;
             return true;
         }
         return false;
     }
 
-    public void increaseAttemptsCount() {
-        attemptsCount++;
-    }
-
     public void clearInputNumbers() {
-        Arrays.fill(inputNumbers, 0, attemptsCount, 0);
-        attemptsCount = 0;
+        Arrays.fill(inputNumbers, 0, countAttempts, 0);
+        countAttempts = 0;
     }
 }
 
