@@ -8,7 +8,6 @@ public class Player {
     private final int[] inputNumbers;
     private int countAttempts;
 
-
     public Player(String name, int maxAttempts) {
         this.name = name;
         inputNumbers = new int[maxAttempts];
