@@ -5,8 +5,9 @@ import java.util.Arrays;
 public class Player {
 
     private final String name;
-    private int countAttempts;
     private final int[] inputNumbers;
+    private int countAttempts;
+
 
     public Player(String name, int maxAttempts) {
         this.name = name;
@@ -25,7 +26,7 @@ public class Player {
         return Arrays.copyOf(inputNumbers, countAttempts);
     }
 
-    public boolean addInputNumber(int number, int min, int max) {
+    public boolean addNumber(int number, int min, int max) {
         if (number >= min && number <= max) {
             inputNumbers[countAttempts] = number;
             countAttempts++;

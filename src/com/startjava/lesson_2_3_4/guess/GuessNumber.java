@@ -1,14 +1,15 @@
 package com.startjava.lesson_2_3_4.guess;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class GuessNumber {
 
-    private int hiddenNumber;
     private final Player[] players;
     private final int min;
     private final int max;
     private final int maxAttempts;
+    private int hiddenNumber;
 
     public GuessNumber(Player[] players, int maxAttempts, int min, int max) {
         this.min = min;
@@ -29,69 +30,68 @@ public class GuessNumber {
     }
 
     private void startGame() {
+        int countOffPlayers = 0;
         while (true) {
             for (Player currentPlayer : players) {
-                if (isPlayerAttemptsEnd(currentPlayer)) {
-                    return;
-                }
                 int nextNumber = inputNextNumber(currentPlayer);
-                if (isPlayerGuessNumber(nextNumber, currentPlayer)) {
+                if (isGuessed(nextNumber, currentPlayer)) {
                     return;
                 }
-                System.out.printf("Число %d" + ((nextNumber > hiddenNumber) ? " больше " : " меньше ")
-                        + "того, что загадал компьютер\n\n", nextNumber);
+                if (!hasAttempt(currentPlayer)) {
+                    countOffPlayers++;
+                }
+                if (countOffPlayers >= players.length) {
+                    return;
+                }
             }
         }
-    }
-
-    private boolean isPlayerAttemptsEnd(Player player) {
-        if (player.getCountAttempts() == maxAttempts) {
-            System.out.println("У " + player.getName() + "закончились попытки");
-            return true;
-        }
-        return false;
     }
 
     private int inputNextNumber(Player player) {
         Scanner console = new Scanner(System.in);
         System.out.println(player.getName() + " введите целое число в диапазоне ["
                 + min + ", " + max + "]: ");
-        String playerInput = console.nextLine();
         try {
-            int number = Integer.parseInt(playerInput);
-            if (player.addInputNumber(number, min, max)) {
+            int number = console.nextInt();
+            if (player.addNumber(number, min, max)) {
                 return number;
             }
             System.out.println("Число за пределами диапазона");
-        } catch (NumberFormatException e) {
+        } catch (NoSuchElementException | IllegalStateException e) {
             System.out.println("Неправильный ввод");
         }
         return inputNextNumber(player);
     }
 
-    private boolean isPlayerGuessNumber(int nextNumber, Player player) {
+    private boolean isGuessed(int nextNumber, Player player) {
         if (nextNumber == hiddenNumber) {
             System.out.println("Игрок " + player.getName() + " угадал число " + nextNumber
                     + " с " + player.getCountAttempts() + " попытки!\n");
             return true;
         }
+        System.out.printf("Число %d" + ((nextNumber > hiddenNumber) ? " больше " : " меньше ")
+                + "того, что загадал компьютер\n\n", nextNumber);
         return false;
+    }
+
+    private boolean hasAttempt(Player player) {
+        if (player.getCountAttempts() == maxAttempts) {
+            System.out.println("У " + player.getName() + " закончились попытки");
+            return false;
+        }
+        return true;
     }
 
     private void printPlayersNumbers() {
         for (Player player : players) {
-            printPlayerNumbers(player);
+            System.out.println("Игрок " + player.getName() + " ввёл следующие числа: ");
+            int[] inputNumbers = player.getInputNumbers();
+            int len = inputNumbers.length;
+            for (int i = 0; i < len; i++) {
+                System.out.print(inputNumbers[i] + ((i == len / 2 - 1) && len > 5 ? "\n" : " "));
+            }
+            System.out.println();
         }
-    }
-
-    private static void printPlayerNumbers(Player player) {
-        System.out.println("Игрок " + player.getName() + " ввёл следующие числа: ");
-        int[] inputNumbers = player.getInputNumbers();
-        int len = inputNumbers.length;
-        for (int i = 0; i < len; i++) {
-            System.out.print(inputNumbers[i] + ((i == len / 2 - 1) && len > 5 ? "\n" : " "));
-        }
-        System.out.println();
     }
 
     private void clearPlayersNumbers() {
