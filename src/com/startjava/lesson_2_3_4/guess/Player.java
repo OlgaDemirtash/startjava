@@ -7,6 +7,7 @@ public class Player {
     private final String name;
     private final int[] inputNumbers;
     private int countAttempts;
+    private int countWins;
 
     public Player(String name, int maxAttempts) {
         this.name = name;
@@ -16,13 +17,19 @@ public class Player {
     public String getName() {
         return name;
     }
-
+    public int[] getInputNumbers() {
+        return Arrays.copyOf(inputNumbers, countAttempts);
+    }
     public int getCountAttempts() {
         return countAttempts;
     }
 
-    public int[] getInputNumbers() {
-        return Arrays.copyOf(inputNumbers, countAttempts);
+    public int getCountWins() {
+        return countWins;
+    }
+
+    public void addCountWins() {
+        this.countWins++;
     }
 
     public boolean addNumber(int number, int min, int max) {
@@ -37,6 +44,10 @@ public class Player {
     public void clearInputNumbers() {
         Arrays.fill(inputNumbers, 0, countAttempts, 0);
         countAttempts = 0;
+    }
+
+    public void clearCountWins() {
+        countWins = 0;
     }
 }
 
