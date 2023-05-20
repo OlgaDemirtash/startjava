@@ -12,16 +12,23 @@ public class GuessNumber {
     private final int maxAttempts;
     private int hiddenNumber;
 
-    public GuessNumber(int maxAttempts, int min, int max, Player... args) {
+    public GuessNumber(int maxAttempts, int min, int max, Player... players) {
         this.min = min;
         this.max = max;
-        players = new Player[args.length];
-        System.arraycopy(args, 0, this.players, 0, args.length);
+        this.players = copyPlayers(players);
         this.maxAttempts = maxAttempts;
     }
 
     private void setHiddenNumber() {
         hiddenNumber = (int) (Math.random() * max + min);
+    }
+
+    private Player[] copyPlayers(Player[] players) {
+        Player[] copyPlayers = new Player[players.length];
+        for (int i = 0; i < players.length; i++) {
+            copyPlayers[i] = new Player(players[i]);
+        }
+        return copyPlayers;
     }
 
     public void play() {
@@ -37,12 +44,12 @@ public class GuessNumber {
 
     private void startGame() {
         int countEliminatedPlayers = 0;
-        setRandomOrder();
+        shufflePlayers();
         while (true) {
             for (Player currentPlayer : players) {
                 int nextNumber = inputNextNumber(currentPlayer);
                 if (isGuessed(nextNumber, currentPlayer)) {
-                    currentPlayer.addCountWins();
+                    currentPlayer.incrementScore();
                     return;
                 }
                 if (!hasAttempt(currentPlayer)) {
@@ -55,7 +62,7 @@ public class GuessNumber {
         }
     }
 
-    private void setRandomOrder() {
+    private void shufflePlayers() {
         System.out.println("Бросаю жребий для игроков...");
         for (int i = 0; i < players.length; i++) {
             int j = (int) (Math.random() * i);
@@ -122,7 +129,7 @@ public class GuessNumber {
 
     private void clearPlayersNumbers() {
         for (Player player : players) {
-            player.clearInputNumbers();
+            player.clear();
         }
     }
 
@@ -131,9 +138,9 @@ public class GuessNumber {
         int maxScore = 0;
         boolean isDraw = false;
         for (int i = 0; i < players.length; i++) {
-            if (players[i].getCountWins() > maxScore) {
+            if (players[i].getScore() > maxScore) {
                 maxScoreIndex = i;
-                maxScore = players[i].getCountWins();
+                maxScore = players[i].getScore();
             }
         }
         if (maxScore == 1) {
@@ -143,13 +150,13 @@ public class GuessNumber {
             System.out.println("Ничья!");
             return;
         }
-        System.out.println("Победил игрок " + players[maxScoreIndex].getName() + ", выйграв "
-                + players[maxScoreIndex].getCountWins() + " раза!");
+        System.out.println("Победил игрок " + players[maxScoreIndex].getName() + ", выиграв "
+                + players[maxScoreIndex].getScore() + " раза!");
     }
 
     private void clearPlayersWins() {
         for (Player player : players) {
-            player.clearCountWins();
+            player.clearScore();
         }
     }
 }
