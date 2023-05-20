@@ -65,10 +65,10 @@ public class GuessNumber {
     private void shufflePlayers() {
         System.out.println("Бросаю жребий для игроков...");
         for (int i = 0; i < players.length; i++) {
-            int j = (int) (Math.random() * i);
+            int randomIndex = (int) (Math.random() * i);
             Player tmpPlayer = players[i];
-            players[i] = players[j];
-            players[j] = tmpPlayer;
+            players[i] = players[randomIndex];
+            players[randomIndex] = tmpPlayer;
         }
         System.out.println("Игроки будут ходить в следующем порядке:");
         printPlayersOrder();
