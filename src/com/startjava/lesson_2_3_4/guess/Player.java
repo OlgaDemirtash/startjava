@@ -7,7 +7,6 @@ public class Player {
     private final String name;
     private final int[] inputNumbers;
     private int countAttempts;
-
     private final int maxAttempts;
     private int score;
 
