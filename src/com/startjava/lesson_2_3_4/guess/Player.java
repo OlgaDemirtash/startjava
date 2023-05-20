@@ -10,15 +10,14 @@ public class Player {
     private final int maxAttempts;
     private int score;
 
+    public Player(Player otherPlayer) {
+        this(otherPlayer.getName(), otherPlayer.getMaxAttempts());
+    }
 
     public Player(String name, int maxAttempts) {
         this.name = name;
         this.maxAttempts = maxAttempts;
         inputNumbers = new int[maxAttempts];
-    }
-
-    public Player(Player otherPlayer) {
-        this(otherPlayer.getName(), otherPlayer.getMaxAttempts());
     }
 
     public String getName() {
