@@ -115,7 +115,9 @@ public class BookShelf {
     }
 
     public void clear() {
-        books = new Book[maxBooks - 1];
+        for (int i = 0; i < maxBooks; i++) {
+            books[i] = null;
+        }
         booksCount = 0;
         freePlaces = maxBooks;
         maxLength = 0;
