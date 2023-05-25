@@ -27,7 +27,7 @@ public class BookShelf {
     }
 
     public void add(Book book) {
-        if (getFreePlaces() < 1) {
+        if (countBooks == maxBooks) {
             throw new ArrayIndexOutOfBoundsException("В шкафу нет места");
         }
         try {
@@ -35,14 +35,8 @@ public class BookShelf {
             throw new ArrayStoreException("Ошибка добавления.Книга уже существует");
         } catch (FindException e) {
             books[countBooks] = book;
-            lengthChangeIfMax(books[countBooks].getInfoLength());
+            changeLengthIfMax(books[countBooks].getInfoLength());
             countBooks++;
-        }
-    }
-
-    private void lengthChangeIfMax(int length) {
-        if (length > maxLength) {
-            maxLength = length;
         }
     }
 
@@ -51,17 +45,6 @@ public class BookShelf {
             if (books[i].toString().toLowerCase().contains(title.toLowerCase())) {
                 return books[i];
             }
-        }
-        throw new FindException("Книга не найдена");
-    }
-
-    private int findIndex(String title) {
-        int index = 0;
-        for (Book book : books) {
-            if (book.toString().toLowerCase().contains(title.toLowerCase())) {
-                return index;
-            }
-            index++;
         }
         throw new FindException("Книга не найдена");
     }
@@ -89,10 +72,27 @@ public class BookShelf {
         }
     }
 
+    private int findIndex(String title) {
+        int index = 0;
+        for (Book book : books) {
+            if (book.getTitle().toLowerCase().contains(title.toLowerCase())) {
+                return index;
+            }
+            index++;
+        }
+        throw new FindException("Книга не найдена");
+    }
+
     private void calculateMaxLength() {
         maxLength = 0;
-        for (Book book : books) {
-            lengthChangeIfMax(book.getInfoLength());
+        for (int i = 0; i < countBooks; i++) {
+            changeLengthIfMax(books[i].getInfoLength());
+        }
+    }
+
+    private void changeLengthIfMax(int length) {
+        if (length > maxLength) {
+            maxLength = length;
         }
     }
 
@@ -101,7 +101,7 @@ public class BookShelf {
     }
 
     public void clear() {
-        Arrays.fill(books, null);
+        Arrays.fill(getAll(), null);
         countBooks = 0;
         maxLength = 0;
     }

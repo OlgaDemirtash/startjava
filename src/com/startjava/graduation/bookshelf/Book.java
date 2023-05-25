@@ -13,6 +13,10 @@ public class Book {
         infoLength = toString().length();
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public int getInfoLength() {
         return infoLength;
     }

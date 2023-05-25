@@ -4,50 +4,39 @@ import java.lang.module.FindException;
 import java.util.Scanner;
 
 public class BookShelfMain {
-    private final static String menu = """
-            1. Добавить книгу
-            2. Найти книгу
-            3. Удалить книгу
-            4. Очистить шкаф
-            5. Показать все книги
-            6. Выйти
-            """;
     private static BookShelf bookShelf;
 
     public static void main(String[] args) {
         Scanner console = new Scanner(System.in);
         String answer;
         bookShelf = new BookShelf(10);
-        System.out.println("Шкаф пуст. Вы можете добавить в него первую книгу");
-        printMenu(bookShelf);
         do {
+            showShelf();
+            printMenu(bookShelf);
             answer = console.nextLine();
             switch (answer) {
-                case "1" -> addBook();
-                case "2" -> findBook();
-                case "3" -> deleteBook();
+                case "1" -> addBook(console);
+                case "2" -> findBook(console);
+                case "3" -> deleteBook(console);
                 case "4" -> clearBookShelf();
-                case "5" -> showShelf();
-                case "6" -> System.out.println("Пока!");
+                case "5" -> {
+                    System.out.println("Пока!");
+                    return;
+                }
                 default -> System.out.println("Пункт меню не распознан, повторите ввод");
             }
             printEnter(console);
-            printMenu(bookShelf);
-        } while (!answer.trim().equals("6"));
+        } while (!answer.trim().equals("5"));
     }
 
-    private static void addBook() {
+    private static void addBook(Scanner console) {
         while (true) {
-            Scanner console = new Scanner(System.in);
             System.out.println("Введите автора");
-            String author = console.nextLine();
+            String author = console.nextLine().trim();
             System.out.println("Введите заголовок");
-            String title = console.nextLine();
+            String title = console.nextLine().trim();
             System.out.println("Введите год издания");
-            String publishYear = console.nextLine();
-            author = author.trim();
-            title = title.trim();
-            publishYear = publishYear.trim();
+            String publishYear = console.nextLine().trim();
             if (author.isBlank() || title.isBlank() || publishYear.isBlank()) {
                 System.out.println("Ошибка добавления.Поля Автор, Имя, Год должны быть заполненны");
                 continue;
@@ -64,25 +53,23 @@ public class BookShelfMain {
         }
     }
 
-    private static void findBook() {
-        Scanner console = new Scanner(System.in);
+    private static void findBook(Scanner console) {
         Book book;
         System.out.println("Введите строку для поиска");
-        String searchPattern = console.nextLine();
+        String title = console.nextLine();
         try {
-            book = bookShelf.find(searchPattern);
+            book = bookShelf.find(title);
             showBook(book, bookShelf.getMaxLength());
         } catch (FindException e) {
             System.out.println(e.getMessage() + "\n");
         }
     }
 
-    private static void deleteBook() {
-        Scanner console = new Scanner(System.in);
+    private static void deleteBook(Scanner console) {
         System.out.println("Введите строку для поиска книги для удаления");
-        String searchPattern = console.nextLine();
+        String title = console.nextLine();
         try {
-            bookShelf.delete(searchPattern);
+            bookShelf.delete(title);
             System.out.println("Книга удалена");
         } catch (FindException e) {
             System.out.println(e.getMessage() + "\n");
@@ -112,19 +99,23 @@ public class BookShelfMain {
     }
 
     private static void printEnter(Scanner console) {
-        while (true) {
+        String str = ".";
+        while (!str.isBlank()) {
             System.out.println("Для продолжения работы нажмите <Enter> ");
-            String str = console.nextLine();
-            if (str.isBlank()) {
-                break;
-            }
+            str = console.nextLine();
         }
     }
 
     private static void printMenu(BookShelf bookShelf) {
         System.out.println("В шкафу " + bookShelf.getCountBooks() +
                 " книг и " + bookShelf.getFreePlaces() + " свободных полок.");
-        System.out.println(menu);
+        System.out.println("""
+                1. Добавить книгу
+                2. Найти книгу
+                3. Удалить книгу
+                4. Очистить шкаф
+                5. Выйти
+                """);
     }
 }
 
