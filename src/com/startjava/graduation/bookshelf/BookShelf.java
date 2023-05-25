@@ -50,10 +50,8 @@ public class BookShelf {
     }
 
     public void delete(String title) {
-        int index;
-        try {
-            index = findIndex(title);
-        } catch (FindException e) {
+        int index = findIndex(title);
+        if (index == -1) {
             throw new FindException("Книга не найдена");
         }
         if (countBooks == 1) {
@@ -74,13 +72,13 @@ public class BookShelf {
 
     private int findIndex(String title) {
         int index = 0;
-        for (Book book : books) {
-            if (book.getTitle().toLowerCase().contains(title.toLowerCase())) {
+        for (int i = 0; i < countBooks; i++) {
+            if (books[i].getTitle().toLowerCase().contains(title.toLowerCase())) {
                 return index;
             }
             index++;
         }
-        throw new FindException("Книга не найдена");
+        return -1;
     }
 
     private void calculateMaxLength() {
