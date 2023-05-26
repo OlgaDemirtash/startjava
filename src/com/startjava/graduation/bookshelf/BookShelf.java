@@ -30,23 +30,24 @@ public class BookShelf {
         if (countBooks == maxBooks) {
             throw new ArrayIndexOutOfBoundsException("В шкафу нет места");
         }
-        try {
-            find(book.toString());
-            throw new ArrayStoreException("Ошибка добавления.Книга уже существует");
-        } catch (FindException e) {
+
+        int index = findIndex(book.getTitle());
+        if (index == -1) {
             books[countBooks] = book;
             changeLengthIfMax(books[countBooks].getInfoLength());
             countBooks++;
+        } else {
+            throw new ArrayStoreException("Ошибка добавления.Книга уже существует");
         }
     }
 
     public Book find(String title) {
         for (int i = 0; i < countBooks; i++) {
-            if (books[i].toString().toLowerCase().contains(title.toLowerCase())) {
+            if (books[i].getTitle().toLowerCase().contains(title.toLowerCase())) {
                 return books[i];
             }
         }
-        throw new FindException("Книга не найдена");
+        return null;
     }
 
     public void delete(String title) {
@@ -58,25 +59,19 @@ public class BookShelf {
             clear();
             return;
         }
-        try {
-            int length = books[index].getInfoLength();
-            System.arraycopy(books, index + 1, books, index, countBooks - index - 1);
-            if (maxLength == length) {
-                calculateMaxLength();
-            }
-            countBooks--;
-        } catch (IndexOutOfBoundsException | ArrayStoreException | NullPointerException e) {
-            throw new NullPointerException("Ошибка при удалении книги");
+        int length = books[index].getInfoLength();
+        System.arraycopy(books, index + 1, books, index, countBooks - index - 1);
+        if (maxLength == length) {
+            calculateMaxLength();
         }
+        countBooks--;
     }
 
     private int findIndex(String title) {
-        int index = 0;
         for (int i = 0; i < countBooks; i++) {
             if (books[i].getTitle().toLowerCase().contains(title.toLowerCase())) {
-                return index;
+                return i;
             }
-            index++;
         }
         return -1;
     }
@@ -99,7 +94,7 @@ public class BookShelf {
     }
 
     public void clear() {
-        Arrays.fill(getAll(), null);
+        Arrays.fill(books, 0, countBooks, null);
         countBooks = 0;
         maxLength = 0;
     }
