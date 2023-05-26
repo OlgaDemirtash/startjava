@@ -50,6 +50,12 @@ public class BookShelf {
         return null;
     }
 
+    public Book[] getAll() {
+        return Arrays.copyOf(books, countBooks);
+    }
+
+
+
     public void delete(String title) {
         int index = findIndex(title);
         if (index == -1) {
@@ -65,6 +71,12 @@ public class BookShelf {
             calculateMaxLength();
         }
         countBooks--;
+    }
+
+    public void clear() {
+        Arrays.fill(books, 0, countBooks, null);
+        countBooks = 0;
+        maxLength = 0;
     }
 
     private int findIndex(String title) {
@@ -89,13 +101,5 @@ public class BookShelf {
         }
     }
 
-    public Book[] getAll() {
-        return Arrays.copyOf(books, countBooks);
-    }
 
-    public void clear() {
-        Arrays.fill(books, 0, countBooks, null);
-        countBooks = 0;
-        maxLength = 0;
-    }
 }
