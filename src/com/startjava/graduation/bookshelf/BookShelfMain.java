@@ -5,19 +5,20 @@ import java.util.Scanner;
 
 public class BookShelfMain {
     private static BookShelf bookShelf;
+    private static Scanner console;
 
     public static void main(String[] args) {
-        Scanner console = new Scanner(System.in);
+        console = new Scanner(System.in);
         String answer;
         bookShelf = new BookShelf(10);
         do {
             showShelf();
-            printMenu(bookShelf);
+            printMenu();
             answer = console.nextLine();
             switch (answer) {
-                case "1" -> addBook(console);
-                case "2" -> findBook(console);
-                case "3" -> deleteBook(console);
+                case "1" -> addBook();
+                case "2" -> findBook();
+                case "3" -> deleteBook();
                 case "4" -> clearBookShelf();
                 case "5" -> {
                     System.out.println("Пока!");
@@ -25,8 +26,8 @@ public class BookShelfMain {
                 }
                 default -> System.out.println("Пункт меню не распознан, повторите ввод");
             }
-            printEnter(console);
-        } while (!answer.trim().equals("5"));
+            printEnter();
+        } while (true);
     }
 
     private static void showShelf() {
@@ -34,21 +35,16 @@ public class BookShelfMain {
         if (books.length == 0) {
             System.out.println("Шкаф пуст. Вы можете добавить в него первую книгу");
             return;
+        } else {
+            System.out.println("В шкафу " + bookShelf.getCountBooks() +
+                    " книг и " + bookShelf.getFreePlaces() + " свободных полок.");
         }
         for (Book book : books) {
             showBook(book, bookShelf.getMaxLength());
         }
     }
 
-    private static void showBook(Book book, int maxLength) {
-        System.out.printf("|%-3s|\n", "-".repeat(maxLength));
-        System.out.printf("|%-3s%s|\n", book, " ".repeat(maxLength - book.getInfoLength()));
-        System.out.printf("|%-3s|\n", "-".repeat(maxLength));
-    }
-
-    private static void printMenu(BookShelf bookShelf) {
-        System.out.println("В шкафу " + bookShelf.getCountBooks() +
-                " книг и " + bookShelf.getFreePlaces() + " свободных полок.");
+    private static void printMenu() {
         System.out.println("""
                 1. Добавить книгу
                 2. Найти книгу
@@ -58,7 +54,7 @@ public class BookShelfMain {
                 """);
     }
 
-    private static void addBook(Scanner console) {
+    private static void addBook() {
         while (true) {
             System.out.println("Введите автора");
             String author = console.nextLine().trim();
@@ -82,11 +78,10 @@ public class BookShelfMain {
         }
     }
 
-    private static void findBook(Scanner console) {
-        Book book;
+    private static void findBook() {
         System.out.println("Введите строку для поиска");
         String title = console.nextLine();
-        book = bookShelf.find(title);
+        Book book = bookShelf.find(title);
         if (book != null) {
             showBook(book, bookShelf.getMaxLength());
         } else {
@@ -94,7 +89,13 @@ public class BookShelfMain {
         }
     }
 
-    private static void deleteBook(Scanner console) {
+    private static void showBook(Book book, int maxLength) {
+        System.out.printf("|%-3s|\n", "-".repeat(maxLength));
+        System.out.printf("|%-3s%s|\n", book, " ".repeat(maxLength - book.getInfoLength()));
+        System.out.printf("|%-3s|\n", "-".repeat(maxLength));
+    }
+
+    private static void deleteBook() {
         System.out.println("Введите строку для поиска книги для удаления");
         String title = console.nextLine();
         try {
@@ -110,7 +111,7 @@ public class BookShelfMain {
         System.out.println("Шкаф был очищен");
     }
 
-    private static void printEnter(Scanner console) {
+    private static void printEnter() {
         String str = ".";
         while (!str.isBlank()) {
             System.out.println("Для продолжения работы нажмите <Enter> ");

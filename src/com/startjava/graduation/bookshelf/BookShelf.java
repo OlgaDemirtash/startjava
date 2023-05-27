@@ -54,8 +54,6 @@ public class BookShelf {
         return Arrays.copyOf(books, countBooks);
     }
 
-
-
     public void delete(String title) {
         int index = findIndex(title);
         if (index == -1) {
@@ -81,7 +79,7 @@ public class BookShelf {
 
     private int findIndex(String title) {
         for (int i = 0; i < countBooks; i++) {
-            if (books[i].getTitle().toLowerCase().contains(title.toLowerCase())) {
+            if (books[i].getTitle().equalsIgnoreCase(title)) {
                 return i;
             }
         }
@@ -100,6 +98,4 @@ public class BookShelf {
             maxLength = length;
         }
     }
-
-
 }
