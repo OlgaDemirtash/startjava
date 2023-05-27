@@ -6,14 +6,14 @@ DROP TABLE IF EXISTS jaegers;
 
 CREATE TABLE jaegers (
     id SERIAL PRIMARY KEY,
-    model_name text,
-    mark text,
-    height integer,
-    weight integer,
-    status text,
-    origin text,
-    launch_date date,
-    kaiju_kill integer
+    model_name TEXT,
+    mark TEXT,
+    height INTEGER,
+    weight INTEGER,
+    status TEXT,
+    origin TEXT,
+    launch_date DATE,
+    kaiju_kill INTEGER
 );
 
 \echo 'инициализация базы данных'
